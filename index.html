@@ -3,74 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中台五明菩薩學院-大乘解行研經班題庫</title>
+    <title>114年度上學期大乘解行研經班題庫</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
-            background-color: #f1f5f9;
+            background-color: #f8fafc;
             scroll-behavior: smooth;
         }
         header {
-            background: linear-gradient(to right, #3730a3, #4338ca);
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
         }
         .option-btn {
             text-align: left;
-            padding: 0.85rem 1rem;
-            margin-bottom: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 0.6rem;
             border: 2px solid #e2e8f0;
-            border-radius: 0.75rem;
+            border-radius: 0.85rem;
             width: 100%;
-            font-size: 1.05rem;
+            font-size: 1rem;
             background: white;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
         }
-        .option-btn:active { transform: scale(0.98); }
-        .correct { background-color: #d1fae5 !important; border-color: #10b981 !important; color: #065f46; }
+        .option-btn:hover:not(:disabled) { border-color: #818cf8; background-color: #f5f3ff; }
+        .correct { background-color: #d1fae5 !important; border-color: #10b981 !important; color: #065f46; font-weight: 600; }
         .incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
         
         .section-header {
             background: #4338ca;
             color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
             display: inline-block;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            font-weight: bold;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
 
         .floating-footer {
             position: fixed;
-            bottom: 1rem;
+            bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            width: 92%;
+            max-width: 540px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
             border-radius: 1.5rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             z-index: 100;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-        }
-
-        .quiz-card {
-            scroll-margin-top: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
-<body class="pb-32">
+<body class="pb-36">
 
-    <header class="text-white sticky top-0 z-50 shadow-md">
-        <div class="max-w-2xl mx-auto px-4 py-2">
-            <div class="flex items-center justify-between mb-1">
-                <span class="text-sm font-bold opacity-80">114上期末考題庫 (修正版 V3)</span>
-                <span id="completionRateTop" class="text-xs bg-indigo-500 px-2 py-0.5 rounded-full">完成 0%</span>
+    <header class="text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-2xl mx-auto px-5 py-3">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold tracking-widest opacity-90 uppercase">114年度上學期 期末考試題庫</span>
+                <span id="completionRateTop" class="text-[10px] bg-indigo-500/50 backdrop-blur-md px-2 py-0.5 rounded-full border border-indigo-400/30">完成 0%</span>
             </div>
-            <select id="topicSelector" onchange="changeTopic()" class="w-full p-2 rounded-lg text-gray-900 bg-white border-none shadow-inner text-base font-bold outline-none">
+            <select id="topicSelector" onchange="changeTopic()" class="w-full p-3 rounded-xl text-gray-900 bg-white border-none shadow-xl text-base font-bold outline-none focus:ring-2 focus:ring-indigo-400 transition-all cursor-pointer">
                 <option value="0">主題(一) 菩提自性是修行根本</option>
                 <option value="1">主題(二) 修行由信解自性開始</option>
                 <option value="2">主題(三) 自性世界因不同體悟而開展</option>
@@ -82,34 +79,34 @@
         </div>
     </header>
 
-    <main class="max-w-2xl mx-auto p-4">
-        <div id="topicTitle" class="text-xl font-black text-indigo-900 mb-4 border-l-4 border-indigo-600 pl-3"></div>
+    <main class="max-w-2xl mx-auto p-5">
+        <div id="topicTitle" class="text-2xl font-black text-indigo-950 mb-6 leading-tight"></div>
 
         <div id="tfSection" class="hidden">
-            <div class="section-header">一、是非題</div>
+            <div class="section-header">一、是非題 (○ 正確 / × 錯誤)</div>
             <div id="tfQuestionsArea"></div>
         </div>
 
-        <div id="mcSection" class="hidden mt-6">
+        <div id="mcSection" class="hidden mt-10">
             <div class="section-header">二、選擇題</div>
             <div id="mcQuestionsArea"></div>
         </div>
     </main>
 
-    <footer class="floating-footer p-3">
+    <footer class="floating-footer p-4">
         <div class="flex items-center justify-between gap-4">
-            <div class="flex flex-col items-center justify-center px-4 border-r border-gray-200">
-                <span class="text-[10px] text-gray-400 font-bold uppercase">答對</span>
-                <span class="text-xl font-black text-indigo-600 leading-none">
-                    <span id="scoreDisplay">0</span><span class="text-xs text-gray-400 mx-0.5">/</span><span id="totalDisplay" class="text-gray-400">0</span>
+            <div class="flex flex-col items-center justify-center px-5 border-r border-gray-100">
+                <span class="text-[10px] text-gray-400 font-black uppercase tracking-tighter">答對題數</span>
+                <span class="text-2xl font-black text-indigo-600 tabular-nums leading-none">
+                    <span id="scoreDisplay">0</span><span class="text-sm text-gray-300 mx-1">/</span><span id="totalDisplay" class="text-gray-300">0</span>
                 </span>
             </div>
             <div class="flex-1 flex gap-2">
-                <button onclick="resetCurrentTopic()" class="flex-1 bg-rose-500 text-white text-sm font-bold py-3 rounded-xl shadow-sm active:bg-rose-700 transition-colors">
-                    重測
+                <button onclick="resetCurrentTopic()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white text-sm font-black py-3.5 rounded-xl shadow-lg shadow-rose-200 active:scale-95 transition-all">
+                    清空重測
                 </button>
-                <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="flex-1 bg-gray-100 text-gray-600 text-sm font-bold py-3 rounded-xl border border-gray-200">
-                    頁首
+                <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white text-sm font-black py-3.5 rounded-xl shadow-lg shadow-slate-200 active:scale-95 transition-all">
+                    回頂端
                 </button>
             </div>
         </div>
@@ -118,7 +115,7 @@
     <script>
         const quizData = [
             {
-                title: "主題(一) 菩提自性是修行根本",
+                title: "(一) 菩提自性是修行根本",
                 questions: [
                     { type: 'TF', q: "成佛須「三祇修福慧，百劫修相好」，即使始終不明白心性之理，只要經過三大阿僧祇劫的用功，還是可以成就佛道。", a: false },
                     { type: 'TF', q: "「菩提自性是修行根本」意指修行若離心性，就會失去真正的方向與根源。", a: true },
@@ -129,28 +126,28 @@
                     { type: 'TF', q: "《壇經》中六祖大師曰：「善知識！菩提自性，本來清淨，但用此心，直了成佛。」因佛性本具，本來清淨，故不用修行，即成佛道。", a: false },
                     { type: 'TF', q: "「明心見性」是悟到本具的佛性，佛性就是覺性；覺性本性本空、不生不滅；在本性本空當中不能生萬法。", a: false },
                     { type: 'MC', q: "《楞伽經》告訴我們「雖自性淨」，但眾生「猶見不淨」，是何緣故？", o: ["客塵所覆故", "攀緣執取", "顛倒妄想", "以上皆是"], a: 3 },
-                    { type: 'MC', q: "「既然十法界不離一心，則一切修法，都是修心」，下列敘述何者正確？", o: ["此心放不下，打無明，好吃懶做等等，就向上墮落", "除習氣，諸惡莫作，眾善奉行，就向上提升", "所有修行方式（如參禪、念佛、誦經、禮拜等）本質上都是在修養心性", "以上皆是"], a: 3 },
+                    { type: 'MC', q: "「既然十法界不離一心，則一切修法，都是修心」，下列敘述何者正確？", o: ["此心放不下，打無明，好吃懶做等等，就向下墮落", "除習氣，諸惡莫作，眾善奉行，就向上提升", "所有修行方式（如參禪、念佛、誦經、禮拜等）本質上都是在修養心性", "以上皆是"], a: 3 },
                     { type: 'MC', q: "為何說「心外的一切」都是「緣起性空」？", o: ["因為心外萬法都是真實永恆不變的", "因為諸法性空，是仗因托緣而有", "因為本性本空，所以一切都是虛空", "以上皆是"], a: 1 },
                     { type: 'MC', q: "五祖大師開示《金剛經》至哪一句話時，惠能大師言下大悟，一切萬法不離自性？", o: ["如是我聞", "凡所有相，皆是虛妄", "應無所住而生其心", "不識本心，學法無益"], a: 2 },
                     { type: 'MC', q: "為什麼要認識本真？", o: ["以生滅心為本修因，而求佛乘不生不滅，無有是處", "心性本具，人皆可頓，但用此心，直了成佛", "不識本心，學法無益", "以上皆是"], a: 3 },
                     { type: 'MC', q: "根據古德所言「菩薩畏因，眾生畏果」，修行者在面對煩惱時，應當如何用功？", o: ["廣修六波羅蜜，以福報來消除業障", "專注於禪定，讓心安住於空無的境界中", "從因上、心上去用功，因為天堂地獄都是從這念心生出來的", "專門誦唸經咒，祈求佛力加持，來承擔業報"], a: 2 },
                     { type: 'MC', q: "在佛法中，「安住空性」的涵義是指什麼？", o: ["專注於呼吸，維持禪定狀態", "保持一個安住不動的念頭", "當下這念心，不起心、不動念", "徹底斷除所有的煩惱習氣"], a: 2 },
-                    { type: 'MC', q: "《壇經》中，五祖大師云：「無上菩提，須得言下識自本心，見自本性，不生不滅。」以下何者為「言下」之意？", o: ["這念心始終不離，說話的當下即是，是謂「言下」", "須透過善知識解說，在他人的言說中找答案", "聽聞他人的言教後，回去思維道理", "以上皆是"], a: 0 },
-                    { type: 'MC', q: "關於「菩提自性」或「覺性」的描述，下列哪一項是正確之處？", o: ["它是虛空、空洞，一無所有，所以說「本性本空」", "它是眾生本具的，但必須透過向外學習的智慧才能啟發", "是不生不滅的覺性，在本性本空當中能生萬有，具足功德妙用", "它的體性是生滅的，但因受到佛陀教化，可以轉為不生不滅"], a: 2 }
+                    { type: 'MC', q: "《壇經》中，五祖大師云：「無上菩提，須得言下識自本心，見自本性，不生不滅。」以下何者為「言下」之意？", o: ["這念心始終不離，說話的當下即是，是謂「言下」", "須透過善知識解說，在他人的言說中找答案，是謂「言下」", "聽聞他人的言教後，回去思惟道理，是謂「言下」", "以上皆是"], a: 0 },
+                    { type: 'MC', q: "關於「菩提自性」或「覺性」的描述，下列哪一項是正確之處？", o: ["它是虛空、空洞，一無所有，所以說「本性本空」", "它是眾生本具的，但必須透過向外學習的智慧才能啟發", "是不生不滅的覺性、心性，在本性本空當中能生萬有，具足功德妙用", "它的體性是生滅的，但因受到佛陀教化，可以轉為不生不滅"], a: 2 }
                 ]
             },
             {
-                title: "主題(二) 修行由信解自性開始",
+                title: "(二) 修行由信解自性開始",
                 questions: [
                     { type: 'TF', q: "窺基大師說，信心的建立，要藉由外善知識的教導而顯發；理解則須自覺，因明了而生體悟，非他人所能替代。", a: true },
                     { type: 'TF', q: "「一闡提」不解不信，是為斷絕善根的人，所以不可能成佛。", a: false },
                     { type: 'TF', q: "修行的過程，應該要讓自己的信心從初信、正信、深信到證信，這一生絕對不虛過。", a: true },
                     { type: 'TF', q: "有智慧但無信心的人，容易增長無明；有信心但無智慧的人，容易增長邪見。", a: false },
                     { type: 'TF', q: "若有眾生欲向大乘者，最初所行的根本之業，是依止「一實境界」來修習信解。", a: true },
-                    { type: 'TF', q: "修行人據實從心上用功，不向心外馳求，信自心是佛，這些都是真實不虛的聖教語言。", a: true },
+                    { type: 'TF', q: "修行人但從心上用功，不向心外馳求，信自心是佛，這些都是真實不虛的聖教語言。", a: true },
                     { type: 'TF', q: "「信」首先要斷疑生信，「解」是從知解入門，最後還要「解悟」，才能徹見自性，這就是「信解自性」。", a: true },
                     { type: 'TF', q: "靈雲睹桃花、香巖聞擊竹聲，頓了自心，稱之為「知解之解」。", a: false },
-                    { type: 'TF', q: "佛法上凡是講行持，都離不開信、解、行、證. 所謂「行」有內行外行，要內外相應。內行須斷我法二執；外行則修萬善細行。", a: true },
+                    { type: 'TF', q: "佛法上凡是講行持，都離不開信、解、行、證。所謂「行」有內行外行，要內外相應。內行須斷我法二執；外行則修萬善細行。", a: true },
                     { type: 'MC', q: "如何信解自性？", o: ["知幻即離，不作方便", "離幻即覺，亦無漸次", "隨順覺性", "以上皆是"], a: 3 },
                     { type: 'MC', q: "欲學無上菩提，下列何者為非？", o: ["息滅妄心，了知妄境", "應信解自性", "須言下識自本心，不生不滅", "若輕人即有無量無邊罪"], a: 0 },
                     { type: 'MC', q: "窺基大師所謂的「一闡提輩」是指：", o: ["利根正見之人", "利根邪見之人", "鈍根正見之人", "鈍根邪見之人"], a: 3 },
@@ -163,116 +160,116 @@
                 ]
             },
             {
-                title: "主題(三) 自性世界因不同體悟而開展",
+                title: "(三) 自性世界因不同體悟而開展",
                 questions: [
                     { type: 'TF', q: "六祖大師悟到體用不二、空有一如，就是要「無住生心」，起般若觀照，覺性要時時存在。", a: true },
-                    { type: 'TF', q: "在未悟之前，所修的一切都是加行：誦經、持咒、拜懺等法門，都是在累積福德資糧，這還不是真正的修道。", a: true },
-                    { type: 'TF', q: "神秀大師「勿使惹塵埃」的意思是，一個真正的修行人應該讓自己完全遠離塵世，不與任何人事物接觸。", a: false },
-                    { type: 'TF', q: "事修就是要讓身口意三業都時時保持清淨，心中沒有貪瞋癡慢疑邪見，清淨就可以見性。", a: true },
+                    { type: 'TF', q: "在未悟之前，所修的一切都是加行：誦經、持咒、打坐、參禪、拜懺、禮佛這種種法門，都是在累積福德資糧，這樣精進用功，就是修加行，還不是真正的修道。", a: true },
+                    { type: 'TF', q: "神秀大師「勿使惹塵埃」的意思是，一個真正的修行人應該讓自己完全遠離塵世，不與任何人事物接觸，以避免心生煩惱。", a: false },
+                    { type: 'TF', q: "事修就是要讓身口意三業都時時保持清淨，心中沒有貪瞋癡慢疑邪見，心中真正光明、清淨，就可以見性。", a: true },
                     { type: 'TF', q: "既然「菩提本無樹」，那麼就不必修一切善法，自然可以直了成佛。", a: false },
                     { type: 'TF', q: "惠能大師作「菩提本無樹」一偈，即已悟到最高的實相境界，達到體用一如。", a: false },
-                    { type: 'TF', q: "「應無所住而生其心」的「住」，是指攀緣心，所以只要不想過去、現在、未來，就是無住生心。", a: false },
-                    { type: 'TF', q: "「言下識自本心」的「言下」，指的是起心動念當下那一念。要從自己起心動念的這念心去認識誰在說話。", a: true },
+                    { type: 'TF', q: "「應無所住而生其心」的「住」，是指攀緣心，所以只要不想過去、不想現在、不想未來、不想東西南北，就是無住生心。", a: false },
+                    { type: 'TF', q: "「言下識自本心」的「言下」，指的是起心動念當下那一念，念頭一過就已經成為話尾了。所以，要從自己起心動念的這念心去認識誰在說話，從這個地方「見自本性」。", a: true },
                     { type: 'TF', q: "五祖大師要求門人火急作偈，不得遲滯，因為見性之人，思慮不能太慢，故「思量即不中用」。", a: false },
                     { type: 'TF', q: "「時時勤拂拭，勿使惹塵埃」只是事修的體悟，並非究竟，因此不能依此用功。", a: false },
                     { type: 'MC', q: "惠能大師聽五祖大師說《金剛經》，至「應無所住而生其心」，言下大悟，悟到什麼？", o: ["一切萬法不離自性", "悟道這念心體用一如、空有不二", "無住生心就是定慧等持的這念心", "以上皆是"], a: 3 },
                     { type: 'MC', q: "六祖大師的偈子「菩提本無樹，明鏡亦非臺，本來無一物，何處惹塵埃」，所揭示的理體是：", o: ["空性、一切諸法畢竟空", "知幻即離，離幻即覺", "妙有之理，能生萬法", "漸修成道，不墮惡道"], a: 0 },
-                    { type: 'MC', q: "下列何者符合「自性能生萬法」的道理？", o: ["可以隨心所欲，想做什麼就做什麼", "外在世界都是幻象，不需要努力工作", "認為一切早已註定，努力也沒用", "認識到起心動念至關重要，積極修善斷惡，開創光明人生"], a: 3 },
+                    { type: 'MC', q: "下列何者符合「自性能生萬法」的道理？", o: ["可以隨心所欲，想做什麼就做什麼", "因為外在世界都是自性所生的幻象，所以不需要努力工作，得過且過即可", "認為一切早已註定，再怎麼努力也沒有用", "深刻認識到自己的起心動念至關重要，因此積極修善斷惡，就能開創光明的人生"], a: 3 },
                     { type: 'MC', q: "五祖大師對神秀說「汝作此偈，未見本性，只到門外，未入門內」，意指神秀的修行屬於哪一類？", o: ["悟到空性，但執著於空", "功德具足，只欠祖師印可", "執著有為法，尚未契悟無為的本心", "雖有解悟，但無實證"], a: 2 },
-                    { type: 'MC', q: "在道場中完成任務卻心想：「我做得比他好，功勞應歸我，為何師父表揚他？」這是哪一種執著？", o: ["認為四大五蘊為幻有", "落入「有理無事」的邪見", "修福著相，落入「有我罪即生」", "執空廢有，未修福德"], a: 2 },
+                    { type: 'MC', q: "在道場中，雖然幫師兄弟完成了緊急任務，卻心想：「我做得比他好，功勞應該歸我，為何師父還是表揚了他？」這是哪一種執著？", o: ["認為四大五蘊為幻有", "落入「有理無事」的邪見", "修福著相，落入「有我罪即生」", "執空廢有，未修福德"], a: 2 },
                     { type: 'MC', q: "五祖大師喚諸門人作偈，為何又說「思量即不中用」？", o: ["心性是無為法，若以有為法覓無上菩提，了不可得", "思量即是生滅想念", "見性之人，言下須見", "以上皆是"], a: 3 },
-                    { type: 'MC', q: "有關六祖大師開悟的層次，下列敘述，何者為是？", o: ["分為悟到心之體及悟到體用一如兩個層次", "第一次五祖大師說惠能大師沒有悟，是指未悟到最高實相境界", "第二次則悟到了「無住生心」，就是悟到了菩提心", "以上皆是"], a: 3 },
-                    { type: 'MC', q: "下列何者為非？", o: ["「菩提本無樹」意為菩提樹乃因緣假合是空性，不可執著。", "「明鏡亦非台」明鏡表心體，這念心照天照地無台可尋。", "「本來無一物」意為一切法畢竟空。", "「何處惹塵埃」意為菩提心若起執著即被污染。"], a: 0 }
+                    { type: 'MC', q: "有關六祖大師開悟的層次，下列敘述，何者為是？", o: ["分為兩個層次，一是悟到心之體——般若空性，二是悟到體用一如，體用本來就是一個", "第一次五祖大師說惠能大師沒有悟，是指沒有悟到最高的實相境界", "第二次則悟到了「無住生心」，就是悟到了菩提心了", "以上皆是"], a: 3 },
+                    { type: 'MC', q: "下列何者為非？", o: ["「菩提本無樹」意為菩提樹乃因緣假合是空性，不可執著", "「明鏡亦非台」明鏡表心體，這念心照天照地無台可尋", "「本來無一物」意為一切法畢竟空", "「何處惹塵埃」意為菩提心染污即不得"], a: 0 }
                 ]
             },
             {
-                title: "主題(四、五) 迷時師度 / 日用修行",
+                title: "(四) 迷時師度 悟了自度 (五) 日用修行不離自性",
                 questions: [
                     { type: 'TF', q: "《大乘起信論》告訴我們，真如有「正因熏習之力」，所以只要靠真如內薰，眾生即能自斷煩惱入涅槃。", a: false },
-                    { type: 'TF', q: "《雜阿含經》中佛說：「夫善知識、善友、善伴，乃是梵行全體。」故修行若得遇善知識，則一切無勞我修。", a: false },
+                    { type: 'TF', q: "在《雜阿含經》中，佛陀告訴我們：「夫善知識、善友、善伴，乃是梵行全體。」故修行若能得遇大善知識、善友、善伴，則一切無勞我修。", a: false },
                     { type: 'TF', q: "只要心當中沒有邪見，具備知識和見解，並能落實修行者，即稱為「大善知識」。", a: false },
                     { type: 'TF', q: "「觸物起照」指的是在接觸外境時，能觀照其虛妄本質，不為外境所轉。", a: true },
                     { type: 'TF', q: "「終日喫飯，未曾咬著一粒米。」告訴我們修行在日用之間，只要不被諸境所迷惑，即是自在解脫之人。", a: true },
                     { type: 'TF', q: "菩薩在日常修行中，廣修六度萬行，必須和光同塵，與眾生同流合污，才有辦法度眾生。", a: false },
                     { type: 'TF', q: "香嚴智閑禪師在聽到瓦礫擊竹的聲響時，體悟到「能聽的心」和「所聽的聲音」同時存在，而頓然開悟。", a: false },
                     { type: 'TF', q: "佛言：「隨其心淨即佛土淨」，只有到了西方才能心淨土淨。", a: false },
-                    { type: 'TF', q: "善知識雖能指引方向，但不能替弟子開悟；真正的覺悟，是弟子自性當下的顯現。", a: true },
-                    { type: 'TF', q: "自性自度的核心義理在於：自心的煩惱等眾生，必須由自己的正見來調伏；真正的度，在自心。", a: true },
+                    { type: 'TF', q: "善知識雖能指引方向、破除邪見、啟發般若，但不能替弟子開悟；真正的覺悟，是弟子自性當下的顯現。", a: true },
+                    { type: 'TF', q: "自性自度的核心義理在於：自心的煩惱、邪見、嫉妒、愚癡等眾生，必須由自己的正見與般若來調伏、破除；因此真正的度，在自心，不在外界。", a: true },
                     { type: 'MC', q: "所謂「外道」，是指：", o: ["執著世界有造物主者", "執斷常知見者", "心外求道者", "以上皆是"], a: 3 },
                     { type: 'MC', q: "如何在日用當中修行？", o: ["在日用不知處，求其固有之知", "一切聲色貨利，不為所惑", "遇境逢緣，無一物可動於中", "以上皆是"], a: 3 },
                     { type: 'MC', q: "在日常生活中，修行者依「應無所住而生其心」的道理，應當堅持何種行持？", o: ["為避免起心動念，什麼都不想", "廣行六度萬行，且不在塵境中以識情染著自心", "只專注禪定就好", "僅修事相善法，不必了解理體空性"], a: 1 },
-                    { type: 'MC', q: "《金剛經》序分中，長老須菩提見世尊著衣持鉢乞食、洗足敷座，大歎希有，是因為？", o: ["世尊即便乞食，也具足威儀", "世尊行住坐臥，穿衣吃飯，皆不離自性，此即頓悟修行之要", "世尊食畢，即敷座用功，十分精進", "世尊和光同塵，與大眾一同平等乞食"], a: 1 },
+                    { type: 'MC', q: "《金剛經》一開始提到「爾時，世尊食時，著衣持鉢，入舍衛大城乞食。於其城中，次第乞已，還至本處。飯食訖，收衣鉢，洗足已，敷座而坐。」長老須菩提，於中有何體悟？而大歎希有！", o: ["世尊即便乞食，也具足威儀", "世尊行住坐臥，穿衣吃飯，皆不離自性，此即頓悟修行之要", "世尊食畢，即敷座用功，十分精進", "世尊和光同塵，與大眾一同平等乞食，沒有特權"], a: 1 },
                     { type: 'MC', q: "根據「無盡燈法門」的開示，報答佛恩的真正表現是什麼？", o: ["誦經禮懺", "確保衣缽不失", "繼續開導眾生發菩提心，饒益一切眾生", "以上皆是"], a: 2 },
                     { type: 'MC', q: "關於有師度還需自度，下列何者為非？", o: ["因身心本不相代", "師父的開示只是指路碑，路還是要自己走", "師度是梵行半體，自度亦是，兩個加起來才是梵行全體", "師父引進門，修行在個人"], a: 2 },
-                    { type: 'MC', q: "根據《大乘起信論》，若欲成就佛道，下列何者為是？", o: ["眾生可自斷煩惱入涅槃", "善知識能為眾生助緣，使其外得悟境", "正因雖本有，必須值遇諸佛或善知識為「緣」引導，方能契悟", "正因即師度，善知識即自度，二者無異"], a: 2 },
+                    { type: 'MC', q: "根據《大乘起信論》，眾生有「正因熏習之力」，若欲成就佛道，下列何者為是？", o: ["眾生可自斷煩惱入涅槃", "善知識能為眾生助緣，使其外得悟境", "正因雖是自性本有，眾生不知，必須值遇諸佛菩薩或善知識等以之為「緣」引導，方能契悟自性", "正因即師度，善知識即自度，二者無異"], a: 2 },
                     { type: 'MC', q: "根據〈六即頌〉的道理，修行人應該如何看待自身的行持？", o: ["專注修福德，不必在乎言語行為", "不管心性之理，只專注於事修", "只要做到「動靜理全是」即可，毋需顧慮事相", "「行藏處」就是我們的用功處"], a: 3 },
                     { type: 'MC', q: "下列何者是心外求道？", o: ["在日常生活中觸物起照", "修六度是為了求福、生天", "時時保持覺性存在，人在哪裡、心在哪裡", "布施時不住相、不執著功德"], a: 1 },
-                    { type: 'MC', q: "為什麼迷時，需要師度？", o: ["有善知識化導，令得見性", "以善知識故，脫於生死", "譬如闇中寶，無燈不可見", "以上皆是"], a: 3 }
+                    { type: 'MC', q: "為什麼迷時，需要師度？", o: ["有善知識化導，令得見性", "以善知識故，脫於生死", "譬如闇中寶，無燈不可見，佛法無人說，雖慧莫能了", "以上皆是"], a: 3 }
                 ]
             },
             {
-                title: "主題(六) 圓滿人人本具的自性",
+                title: "(六) 圓滿人人本具的自性",
                 questions: [
                     { type: 'TF', q: "頓悟法門是無一法可得，不但是染法不可得，連清淨法、出世法也了不可得。", a: true },
-                    { type: 'TF', q: "六祖不被外境迷惑就是悟，契悟這念本具的心，才是真正的找到路頭。", a: true },
-                    { type: 'TF', q: "「中道」指的是不偏執於生滅、常斷等，但仍然承認其為實有。", a: false },
-                    { type: 'TF', q: "「事理不二」的意思是：只要懂佛法的道理，不需要持戒、打坐等實踐功夫。", a: false },
-                    { type: 'TF', q: "六祖認為，正教本無頓漸之別，但因眾生根性有利鈍差異，故方便立「頓」、「漸」之假名。", a: true },
+                    { type: 'TF', q: "眼不被色迷、耳不被聲迷、鼻根不被香臭氣味迷、舌根不被酸甜苦辣迷、心不迷惑就是悟，契悟這念本具的心，才是真正的找到路頭。", a: true },
+                    { type: 'TF', q: "「中道」指的是不偏執於生滅、常斷、一異、來出，但仍然承認其為實有。", a: false },
+                    { type: 'TF', q: "「事理不二」的意思是：只要懂佛法的道理，不需要持戒、誦經、打坐……等實踐功夫。", a: false },
+                    { type: 'TF', q: "六祖惠能大師認為，正教本無頓漸之別，但因眾生根性有利鈍差異，故方便立「頓」、「漸」之假名。", a: true },
                     { type: 'TF', q: "六祖大師認為禪定解脫比見性更重要，因此應該先修禪定再談見性。", a: false },
-                    { type: 'TF', q: "「頓悟」指當下契悟心性，而「漸修」是由事入理，依次第精進用功斷除習氣。", a: true },
+                    { type: 'TF', q: "「頓悟」指當下契悟心性，而「漸修」，是依次第精進用功斷除習氣，是由事入理。", a: true },
                     { type: 'TF', q: "在《維摩詰經》中，維摩詰菩薩示現「入不二法門」的方式是透過無量的讚歎與說法。", a: false },
                     { type: 'MC', q: "有關於「佛性」，下列何者正確？", o: ["不二之法", "非常非無常", "一闡提亦有", "以上皆是"], a: 3 },
                     { type: 'MC', q: "「心性」只有一個，是二就不對，原因是", o: ["「二」就成相對", "相對屬於生滅", "是方便法門", "以上皆是"], a: 3 },
                     { type: 'MC', q: "若事情做完後仍「沾沾自喜」或「憂愁煩惱」，表示什麼？", o: ["已經達到思盡還源的境界", "是智慧心的顯現", "還執著於妄想，未能銷歸自性", "是有修行的展現"], a: 2 },
-                    { type: 'MC', q: "所謂事理不二，是指：", o: ["事理一如", "事理圓融無礙", "即事即理，即理即事", "以上皆是"], a: 3 },
-                    { type: 'MC', q: "關於頓悟與漸修，下列敘述何者正確？", o: ["兩者矛盾，必須擇一而修", "頓悟為因，漸修為果", "頓悟與漸修是互相融通的修行方式", "漸修從理入、頓悟從事入"], a: 2 },
+                    { type: 'MC', q: "所謂事理不二，是指：", o: ["事理一如", "事理圓融無礙", "即事即理", "即理即事", "以上皆是"], a: 3 },
+                    { type: 'MC', q: "關於頓悟與漸修，下列敘述何者正確？", o: ["兩者矛盾，必須擇一而修", "頓悟為因，漸修為果", "頓悟與漸修是互相融通，沒有矛盾的修行方式", "漸修從理入、頓悟從事入"], a: 2 },
                     { type: 'MC', q: "根據《六祖壇經》所說，「佛法是不二之法」其意義為何？", o: ["修禪入定即可證佛性", "有修有證，方名佛法", "超越相對，不落二邊", "定慧相生，次第而修"], a: 2 },
                     { type: 'MC', q: "五祖大師在黃梅教導學人的頓悟法門是？", o: ["六度法門", "惟論見性", "懺悔法門", "斷惡修善之法"], a: 1 }
                 ]
             },
             {
-                title: "主題(七) 大智慧到彼岸",
+                title: "(七) 大智慧到彼岸",
                 questions: [
                     { type: 'TF', q: "六祖大師所說的「般若」，主要是指透過大量閱讀經典、累積知識而獲得的博學智慧。", a: false },
-                    { type: 'TF', q: "「正見名出世，邪見是世間」說明修道者應當時時觀察並指正他人的過失。", a: false },
+                    { type: 'TF', q: "「正見名出世，邪見是世間」說明修道者應當時時觀察並指正他人的過失，令其端正知見，以幫助世間變得更好。", a: false },
                     { type: 'TF', q: "波羅蜜是梵語，中文意義是覺有情。", a: false },
                     { type: 'TF', q: "摩訶般若波羅蜜，不只要口念，更要心行，心口相應，方能達道。", a: true },
                     { type: 'TF', q: "「佛法在世間，不離世間覺」意指欲成無上菩提，必須從日常生活中覺照自心。", a: true },
-                    { type: 'TF', q: "「摩訶般若波羅密多」，其中「摩訶」是大，指心如虛空，若見惡與善時，心中應百無所思。", a: false },
-                    { type: 'TF', q: "實踐「般若波羅蜜」的方法，是在行住坐臥的一切處中，保持「一直心」。", a: true },
-                    { type: 'TF', q: "菩提般若之智，世人本自有之；須假眾人共修禮拜懺悔，方能見性。", a: false },
+                    { type: 'TF', q: "「摩訶般若波羅密多」，其中「摩訶」是大，指心如虛空，若見一切人、惡之與善時，心中應百無所思。", a: false },
+                    { type: 'TF', q: "實踐「般若波羅蜜」的方法，並非逃離日常生活，而是在行住坐臥的一切處中，保持「一直心」。", a: true },
+                    { type: 'TF', q: "菩提般若之智，世人本自有之；只緣心迷，不能自悟，須假眾人共修禮拜懺悔，方能見性。", a: false },
                     { type: 'TF', q: "忍辱若無般若，雖可得到端正相好的果報，但無法像佛一樣證得寂滅忍。", a: true },
                     { type: 'MC', q: "「摩訶般若波羅蜜」的意義是：", o: ["大智慧成就無上正等正覺", "大慈悲得離苦", "大智慧到彼岸", "大智慧得證果"], a: 2 },
-                    { type: 'MC', q: "「離道別覓道，終身不見道」提醒我們修行應當避免何種心態？", o: ["害怕犯錯而不敢修行", "不知返照自心，認為修行只要努力尋師訪道即可", "專注自己修行，不關心他人", "以上皆是"], a: 1 },
-                    { type: 'MC', q: "關於「般若行」，以下何者為非？", o: ["以三輪體空之理布施行善", "聽經聞法，思而無思", "起心不動念，一無所知", "內心保持覺照，不被愚癡蒙蔽"], a: 2 },
-                    { type: 'MC', q: "六祖惠能大師解釋「般若」與一般智慧的區別，在於：", o: ["般若是從善知識而得", "般若是世人本自具足，能見諸法實相的根本智慧", "般若是神通變化力", "般若需要複雜的邏輯推理"], a: 1 },
+                    { type: 'MC', q: "「離道別覓道，終身不見道」提醒我們修行應當避免何種心態？", o: ["害怕犯錯而不敢修行任何法門", "不知返照自心，認為修行只要努力尋師訪道即可", "專注自己修行，不關心他人", "以上皆是"], a: 1 },
+                    { type: 'MC', q: "關於「般若行」，以下何者為非？", o: ["以三輪體空之理布施行善", "聽經聞法，思惟法義，思而無思", "起心不動念，一無所知", "不論何時何地，內心都保持覺照，不被愚癡蒙蔽"], a: 2 },
+                    { type: 'MC', q: "六祖惠能大師解釋「般若」與一般智慧的區別，在於：", o: ["般若是從善知識而得", "般若是世人本自具足，能見諸法實相的根本智慧", "般若是神通變化力", "般若需要複雜的邏輯推理才能獲得"], a: 1 },
                     { type: 'MC', q: "六祖大師以何比喻生死的此岸？", o: ["風中落葉", "水中波浪", "火焰晃耀", "山峰起伏"], a: 1 },
-                    { type: 'MC', q: "有關「般若」，下列敘述何者錯誤？", o: ["生死此岸如水流不息，涅槃彼岸無有生滅", "無住無去無來，即是摩訶般若波羅蜜", "三世諸佛從般若波羅蜜中出生", "一切法不離自性"], a: 0 },
-                    { type: 'MC', q: "有關「布施」，下列何者錯誤？", o: ["捨己利他，與菩薩心行相合", "在般若引導下，才能真正發起菩提心", "不住相都能契悟三輪體空", "《金剛經》法施，不管住不住相，都有無相功德"], a: 3 },
-                    { type: 'MC', q: "關於「若真修道人，不見世間過」，下列何者正確？", o: ["不要管別人的是非對錯", "見賢思齊，見不賢而內自省", "不因別人的過失而起煩惱", "以上皆是"], a: 3 },
-                    { type: 'MC', q: "當與家人爭吵時，如何運用「摩訶般若」化解瞋恨？", o: ["強迫壓下怒氣，內心憤憤不平", "認為自性本空，任由關係惡化", "觀照內心，了知情緒緣起性空，不取不捨", "離開現場找朋友抱怨"], a: 2 },
-                    { type: 'MC', q: "為何六波羅蜜中般若波羅蜜很重要？", o: ["三世諸佛從中出", "欲趣無上菩提，要以前導", "於一切法不取不捨，即是見性成佛", "以上皆是"], a: 3 }
+                    { type: 'MC', q: "有關「般若」，下列敘述何者錯誤？", o: ["生死此岸如水通流不息，涅槃彼岸萬境如如，無有生滅", "無住無去無來，即是摩訶般若波羅蜜", "三世諸佛從般若波羅蜜中出生", "一切法不離自性"], a: 0 },
+                    { type: 'MC', q: "有關「布施」，下列何者錯誤？", o: ["捨己利他，是布施的真義，這與利他為先的菩薩心行相合", "只有在般若智慧的引導下，我們才能真正發起菩提心", "不住相，都能契悟三輪體空", "《金剛經》所說的「法施」，不管住不住相，都有無相功德"], a: 3 },
+                    { type: 'MC', q: "關於「若真修道人，不見世間過」，下列何者正確？", o: ["好好修行，不要管別人的是非對錯", "見賢思齊，見不賢而內自省", "不因別人的過失而起煩惱", "以上皆是"], a: 3 },
+                    { type: 'MC', q: "當與家人發生激烈爭吵時，如何運用「摩訶般若」來化解內心的瞋恨？", o: ["強迫自己壓下怒氣，不再說話，但內心依舊憤憤不平", "認為「自性本空」，所以不需要處理爭吵，任由關係惡化", "觀照內心，了知事件及情緒也是緣起性空，不取不捨", "離開現場，去找朋友抱怨家人的不是，發洩情緒"], a: 2 },
+                    { type: 'MC', q: "為何六波羅蜜中般若波羅蜜很重要？", o: ["三世諸佛從中出", "欲趣無上菩提，要以般若波羅蜜為前導", "以般若觀照，於一切法不取不捨，即是見性成佛道", "以上皆是"], a: 3 }
                 ]
             },
             {
-                title: "主題(八、九、十) 三大宗旨 (無念、無相、無住)",
+                title: "(八) 無念為宗、(九)無相為體、(十)無住為本",
                 questions: [
-                    { type: 'TF', q: "要達到「無住心」的境界，可依循「三際托空」，心便能安住於空無的定境之中。", a: false },
+                    { type: 'TF', q: "要達到「無住心」的境界，可依循《金剛經》所說的三心了不可得，達到「三際托空」，心便能安住於空無的定境之中。", a: false },
                     { type: 'TF', q: "於諸法上，念念不住，即無縛也，此是以「無住」為本。", a: true },
-                    { type: 'TF', q: "過堂時看到喜歡的食物多吃幾塊，只要事後回禪堂用功，仍符合「無念為宗」。", a: false },
-                    { type: 'TF', q: "佛言：「隨其心淨即佛土淨。」所以只要心清淨，什麼都可以不管，依然是淨土。", a: false },
-                    { type: 'TF', q: "《心經》裏面「照見五蘊皆空」的「見」是指「眼睛看見」。", a: false },
+                    { type: 'TF', q: "小張在禪七過堂時，看到自己喜歡的油豆腐，心生貪著，多吃幾塊。然而，他只要之後趕快回到禪堂用功，不打妄想，仍可視為符合「無念為宗」的修行宗旨。", a: false },
+                    { type: 'TF', q: "迷人求生淨土，悟人自淨其心。所以佛言：「隨其心淨即佛土淨。」所以只要心清淨，什麼都可以不管，依然是淨土世界。", a: false },
+                    { type: 'TF', q: "《心經》裡面的「照見五蘊皆空」的「見」是指「眼睛看見」。", a: false },
                     { type: 'TF', q: "惟覺安公老和尚開示：「離相，並不是離開世間，而是不執著一切相。」", a: true },
-                    { type: 'TF', q: "六祖大師說「外離一切相，名為無相」，是要「於相而離相」，不著一切相。", a: true },
+                    { type: 'TF', q: "六祖大師說「外離一切相，名為無相」，並非否定這個相，而是要「於相而離相」，即使在忙碌事務中，不著一切相，也能證得無相的心體。", a: true },
                     { type: 'TF', q: "無念是禪宗法門的根本，意思是心中沒有任何念頭和想法。", a: false },
                     { type: 'MC', q: "下列敘述何者為非？", o: ["無念者，無者無二相，無諸塵勞之心。念者念真如本性", "無念者，即百物不思，念盡除却", "悟無念法者，萬法盡通", "佛的心是無念無住"], a: 1 },
-                    { type: 'MC', q: "看見欣賞的藝術品時，應如何思維以展現「知而不著」？", o: ["避免繼續欣賞，以免生起妄念", "清楚知道珍貴與善用，但心不起貪著", "觀其虛妄，否定藝術價值", "立刻買下供養三寶"], a: 1 },
-                    { type: 'MC', q: "關於「無住」的正確理解是？", o: ["「住」即是達到「三際托空」的境界", "仍須常住善念，以累積功德", "「無住」即是對善惡兩者都不要執著", "「無住」是最高境界，不必再修任何加行"], a: 2 },
-                    { type: 'MC', q: "參與精舍護法會，應如何努力以符合「無相為體」？", o: ["拚命增加發心時數", "避免參加餐敘，以免攀緣", "保持內心謙下，思維觀照三輪體空", "以上皆非"], a: 2 },
-                    { type: 'MC', q: "要達到無住心，可以先修加行，轉化習氣，以下何者為非？", o: ["生處轉熟：善法轉為熟悉", "熟處轉生：惡法轉為生疏", "直接住在不動的境界", "思維觀照三心了不可得"], a: 2 },
-                    { type: 'MC', q: "達磨祖師對梁武帝說「實無功德」的原因為何？", o: ["梁武帝所做的善事都是錯誤的", "功德只能從禪定中得", "梁武帝執著善法求福，而非功德", "達磨祖師主張不必行善"], a: 2 },
-                    { type: 'MC', q: "為了在道場修行能夠「離相」，該如何做？", o: ["不要跟人講話", "被稱讚時就躲起來", "學習「惡事自向己，好事與他人」", "反正做自己就好，一切都不用管"], a: 2 },
-                    { type: 'MC', q: "六祖大師說：「若只百物不思，一念絕即死，是為大錯」，意義為何？", o: ["修行必須完全停止思考", "斷滅一切念頭會落入無記空，失去覺性", "修無念時必須強迫自己不接觸境界", "念頭越少越好"], a: 1 },
+                    { type: 'MC', q: "小明正在學習「知而不著」的智慧，當他在市場中看見一件自己欣賞的珍貴藝術品時，應當如何思惟？", o: ["雖然喜歡，但避免繼續欣賞，以免生起妄念", "清楚知道該藝術品的珍貴，知道如何善用，但心不起貪著", "觀「凡所有相，皆是虛妄」之理，否定其藝術價值", "立刻買下它，供養三寶，才能增添功德"], a: 1 },
+                    { type: 'MC', q: "關於「無住」的正確理解是？", o: ["「住」即是達到「三際托空」的境界", "雖然不住惡念，但仍須常住善念，以累積功德資糧", "「無住」即是對善惡兩者都不要執著", "「無住」是最高的境界，所以不必再修任何加行或轉化習氣"], a: 2 },
+                    { type: 'MC', q: "小明今年開始參與精舍護法會運作，應如何努力，才能符合「無相為體」的道理？", o: ["為了累積更多福德，拚命增加發心時數", "避免參加護法會的餐敘，以免心生攀緣", "應保持內心謙下，並思惟觀照三輪體空之理", "以上皆非"], a: 2 },
+                    { type: 'MC', q: "要達到無住心，可以先修加行，轉化習氣，以下何者為非？", o: ["生處轉熟：將平時生疏的善法、善念，不斷實踐，轉為熟悉", "熟處轉生：將平常熟悉的惡法、惡念轉為生疏", "直接住在不動的境界", "思惟觀照三心了不可得"], a: 2 },
+                    { type: 'MC', q: "達磨祖師對梁武帝說「實無功德」的原因為何？", o: ["梁武帝所做的善事都是錯誤的", "功德只能從禪定中得，不從行善中得", "梁武帝執著善法，所作為求福，而非法身功德", "達磨祖師主張不必行善"], a: 2 },
+                    { type: 'MC', q: "為了在道場當中修行能夠「離相」，該如何做？", o: ["不要跟人講話，以免「著相」", "當師父稱讚自己的時候，就躲起來，才能「離相」", "學習「惡事自向己，好事與他人」", "反正努力做自己就好了，一切都不用管"], a: 2 },
+                    { type: 'MC', q: "六祖大師說：「若只百物不思，一念絕即死，是為大錯」，意義為何？", o: ["修行必須完全停止思考，否則無法入定", "斷滅一切念頭會落入無記空，失去覺性", "修無念時必須強迫自己不接觸境界", "念頭越少越好，越接近真如"], a: 1 },
                     { type: 'MC', q: "有關「無念」，以下何者為非？", o: ["於念而無念", "於諸境上，心不染", "看到境界，無感", "不於境上生心"], a: 2 }
                 ]
             }
@@ -294,7 +291,7 @@
         }
 
         function renderQuestions() {
-            const data = quizData[currentTopicIdx] || { title: "未錄入", questions: [] };
+            const data = quizData[currentTopicIdx];
             document.getElementById('topicTitle').innerText = data.title;
             
             const tfArea = document.getElementById('tfQuestionsArea');
@@ -310,41 +307,43 @@
 
             data.questions.forEach((q, idx) => {
                 const card = document.createElement('div');
-                card.className = "quiz-card bg-white rounded-xl shadow-sm p-4 mb-3 border border-gray-100";
+                card.className = "quiz-card bg-white rounded-2xl shadow-sm p-6 mb-4 border border-slate-200/60";
                 
                 let localIdx = (q.type === 'TF') ? ++tfCount : ++mcCount;
 
                 let html = `
-                    <div class="flex mb-3">
-                        <span class="w-6 h-6 flex items-center justify-center bg-indigo-50 text-indigo-600 font-bold rounded text-xs mr-2 shrink-0">
+                    <div class="flex mb-4">
+                        <span class="w-7 h-7 flex items-center justify-center bg-indigo-600 text-white font-black rounded-lg text-xs mr-3 shrink-0 shadow-md">
                             ${localIdx}
                         </span>
-                        <h3 class="text-base font-bold text-gray-800 leading-snug">${q.q}</h3>
+                        <h3 class="text-lg font-bold text-slate-800 leading-relaxed">${q.q}</h3>
                     </div>
-                    <div id="options-${idx}" class="space-y-2">
+                    <div id="options-${idx}" class="grid grid-cols-1 gap-2">
                 `;
 
                 if (q.type === 'TF') {
                     html += `
-                        <button onclick="checkAnswer(${idx}, true)" id="btn-${idx}-true" class="option-btn">
-                            <span class="w-7 h-7 flex items-center justify-center border-2 border-green-500 text-green-500 rounded-full mr-3 text-xs font-bold">○</span> 是 (正確)
+                        <button onclick="checkAnswer(${idx}, true)" id="btn-${idx}-true" class="option-btn group">
+                            <span class="w-8 h-8 flex items-center justify-center border-2 border-green-500 text-green-500 rounded-full mr-4 text-sm font-black group-hover:bg-green-500 group-hover:text-white transition-all">○</span>
+                            <span class="font-bold">正確 (是)</span>
                         </button>
-                        <button onclick="checkAnswer(${idx}, false)" id="btn-${idx}-false" class="option-btn">
-                            <span class="w-7 h-7 flex items-center justify-center border-2 border-red-500 text-red-500 rounded-full mr-3 text-xs font-bold">×</span> 否 (錯誤)
+                        <button onclick="checkAnswer(${idx}, false)" id="btn-${idx}-false" class="option-btn group">
+                            <span class="w-8 h-8 flex items-center justify-center border-2 border-red-500 text-red-500 rounded-full mr-4 text-sm font-black group-hover:bg-red-500 group-hover:text-white transition-all">×</span>
+                            <span class="font-bold">錯誤 (否)</span>
                         </button>
                     `;
                 } else {
                     q.o.forEach((opt, oIdx) => {
                         html += `
-                            <button onclick="checkAnswer(${idx}, ${oIdx})" id="btn-${idx}-${oIdx}" class="option-btn">
-                                <span class="w-7 h-7 flex items-center justify-center bg-gray-100 text-gray-500 rounded mr-3 text-xs font-bold">${oIdx + 1}</span>
-                                <span class="flex-1 text-sm">${opt}</span>
+                            <button onclick="checkAnswer(${idx}, ${oIdx})" id="btn-${idx}-${oIdx}" class="option-btn group">
+                                <span class="w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-500 rounded-lg mr-4 text-xs font-black group-hover:bg-indigo-600 group-hover:text-white transition-all">${oIdx + 1}</span>
+                                <span class="flex-1 font-medium">${opt}</span>
                             </button>
                         `;
                     });
                 }
                 
-                html += `</div><div id="feedback-${idx}" class="mt-2 p-2 text-xs rounded-lg hidden"></div>`;
+                html += `</div><div id="feedback-${idx}" class="mt-3 hidden"></div>`;
                 card.innerHTML = html;
                 
                 if (q.type === 'TF') tfArea.appendChild(card);
@@ -361,7 +360,16 @@
         function checkAnswer(qIdx, userChoice) {
             const q = quizData[currentTopicIdx].questions[qIdx];
             const isCorrect = (userChoice === q.a);
-            userProgress[`${currentTopicIdx}_${qIdx}`] = { answered: true, correct: isCorrect, userChoice: userChoice };
+
+            // 更新記錄，只有答對時才鎖定狀態
+            if (isCorrect) {
+                userProgress[`${currentTopicIdx}_${qIdx}`] = { 
+                    answered: true, 
+                    correct: true, 
+                    userChoice: userChoice 
+                };
+            }
+
             showResultUI(qIdx, userChoice, isCorrect);
             updateStats();
         }
@@ -369,28 +377,31 @@
         function showResultUI(qIdx, userChoice, isCorrect) {
             const feedback = document.getElementById(`feedback-${qIdx}`);
             const buttons = document.getElementById(`options-${qIdx}`).getElementsByTagName('button');
+            const q = quizData[currentTopicIdx].questions[qIdx];
             
+            // 清除該題所有按鈕的樣式
             for (let btn of buttons) {
                 btn.classList.remove('correct', 'incorrect');
-                btn.disabled = isCorrect; 
+                // 如果已經答對了，則禁用所有按鈕；如果還沒答對，則保持啟用以便重答
+                if (isCorrect) btn.disabled = true; 
             }
 
             const activeBtn = document.getElementById(`btn-${qIdx}-${userChoice}`);
             if (activeBtn) {
                 if (isCorrect) {
                     activeBtn.classList.add('correct');
-                    feedback.innerHTML = "✨ 答對了！隨喜讚嘆。";
-                    feedback.className = "mt-2 p-2 rounded-lg bg-green-50 text-green-700 font-bold block";
+                    feedback.innerHTML = `<div class="p-3 bg-emerald-50 text-emerald-700 rounded-xl flex items-center border border-emerald-100"><span class="mr-2">✨</span> <span class="font-bold">✨ 答對了！隨喜讚嘆。</span></div>`;
                 } else {
                     activeBtn.classList.add('incorrect');
-                    feedback.innerHTML = "再試試看，這念心要作主。";
-                    feedback.className = "mt-2 p-2 rounded-lg bg-red-50 text-red-700 font-bold block";
+                    const correctLabel = q.type === 'TF' ? (q.a ? '正確(○)' : '錯誤(×)') : `選項 (${q.a + 1})`;
+                    feedback.innerHTML = `<div class="p-3 bg-rose-50 text-rose-700 rounded-xl border border-rose-100"><span class="font-bold text-lg mb-1 block underline">再試試看，這念心要作主。</span> 正確答案為：<span class="underline font-black">${correctLabel}</span></div>`;
                 }
+                feedback.classList.remove('hidden');
             }
         }
 
         function updateStats() {
-            const data = quizData[currentTopicIdx] || { questions: [] };
+            const data = quizData[currentTopicIdx];
             let correctCount = 0;
             data.questions.forEach((_, idx) => {
                 const prog = userProgress[`${currentTopicIdx}_${idx}`];
@@ -398,12 +409,12 @@
             });
             document.getElementById('scoreDisplay').innerText = correctCount;
             document.getElementById('totalDisplay').innerText = data.questions.length;
-            const rate = data.questions.length ? Math.round((correctCount / data.questions.length) * 100) : 0;
-            document.getElementById('completionRateTop').innerText = `完成 ${rate}%`;
+            const rate = data.questions.length > 0 ? Math.round((correctCount / data.questions.length) * 100) : 0;
+            document.getElementById('completionRateTop').innerText = `完成度 ${rate}%`;
         }
 
         function resetCurrentTopic() {
-            if (confirm("確定要重新開始本主題作答嗎？")) {
+            if (confirm("確定要清除本主題的作答記錄嗎？")) {
                 const data = quizData[currentTopicIdx];
                 data.questions.forEach((_, idx) => delete userProgress[`${currentTopicIdx}_${idx}`]);
                 renderQuestions();
